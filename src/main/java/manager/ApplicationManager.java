@@ -10,7 +10,7 @@ public class ApplicationManager {
 
     HelperUser helperUser;
 
-    public void init(){
+    public void init() {
         wd = new ChromeDriver();
         wd.manage().window().maximize();
         wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -22,7 +22,7 @@ public class ApplicationManager {
         return helperUser;
     }
 
-    public void stop(){
+    public void stop() {
         wd.quit();
     }
 

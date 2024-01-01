@@ -16,7 +16,7 @@ public class HelperUser extends HelperBase {
         click(By.xpath("//a[text()='LOGIN']"));
     }
 
-    public void fillLoginRegistrationForm (String email, String password) {
+    public void fillLoginRegistrationForm(String email, String password) {
         // WebElement emailInput = wd.findElement(By.xpath("//input[@placeholder='Email']"));
         // emailInput.click();
         // emailInput.clear();
@@ -30,7 +30,7 @@ public class HelperUser extends HelperBase {
         type(By.xpath("//input[last()]"), password);
     }
 
-    public void submitLogin(){
+    public void submitLogin() {
         click(By.xpath("//button[text()='Login']"));
     }
 

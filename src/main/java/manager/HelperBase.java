@@ -21,13 +21,14 @@ public class HelperBase {
             element.sendKeys(text);
         }
     }
-    public void click(By locator){
+
+    public void click(By locator) {
         WebElement element = wd.findElement(locator);
         element.click();
     }
 
-    public boolean isElementPresent(By locator){
-        List<WebElement>list = wd.findElements(locator);
-        return list.size()>0;
+    public boolean isElementPresent(By locator) {
+        List<WebElement> list = wd.findElements(locator);
+        return list.size() > 0;
     }
 }
