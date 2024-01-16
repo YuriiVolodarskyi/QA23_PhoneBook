@@ -34,8 +34,11 @@ public class AddNewContactTests extends TestBase{
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
         app.getHelperContact().submit();
-
-        Assert.assertTrue(app.getHelperContact().isElementPresent(By.className("contact-item_card__2SOIM")));
+        //Написал два ассерта, по-моему, так более надежно.
+        Assert.assertTrue(app.getHelperContact().isElementPresent
+                (By.className("contact-item_card__2SOIM")));
+        Assert.assertTrue(app.getHelperContact().isElementPresent
+                (By.xpath("//h3[text()='" + contact.getPhone() + "']")));
 
     }
 
@@ -55,8 +58,10 @@ public class AddNewContactTests extends TestBase{
         app.getHelperContact().fillContactForm(contact);
         app.getHelperContact().submit();
 
-        Assert.assertTrue(app.getHelperContact().isElementPresent(By.className("contact-item_card__2SOIM")));
-
+        Assert.assertTrue(app.getHelperContact().isElementPresent
+                (By.className("contact-item_card__2SOIM")));
+        Assert.assertTrue(app.getHelperContact().isElementPresent
+                (By.xpath("//h3[text()='" + contact.getPhone() + "']")));
     }
 
 
