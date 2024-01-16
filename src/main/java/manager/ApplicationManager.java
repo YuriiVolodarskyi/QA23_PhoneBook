@@ -17,10 +17,15 @@ public class ApplicationManager {
         wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         wd.navigate().to("https://telranedu.web.app/");
         helperUser = new HelperUser(wd);
+        helperContact = new HelperContact(wd);
     }
 
     public HelperUser getHelperUser() {
         return helperUser;
+    }
+
+    public HelperContact getHelperContact() {
+        return helperContact;
     }
 
     public void stop() {

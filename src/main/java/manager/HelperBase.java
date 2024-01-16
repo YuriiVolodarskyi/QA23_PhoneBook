@@ -56,4 +56,7 @@ public class HelperBase {
             throw new RuntimeException(e);
         }
     }
+
+
+    //WebElement buttonContact = wd.findElement("//a[text()='CONTACTS']")
 }
