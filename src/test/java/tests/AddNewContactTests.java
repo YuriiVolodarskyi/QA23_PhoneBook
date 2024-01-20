@@ -23,46 +23,151 @@ public class AddNewContactTests extends TestBase{
     public void addContactSuccess(){
         int i = new Random().nextInt(1000) + 1000;
         Contact contact = Contact.builder()
-                .name("Vasya")
+                .name("Vasya" + i)
                 .lastName("Pupkin")
                 .phone("1234567890")
                 .email("pupkin" + i + "@gmail.com")
                 .address("29 Ha-Yarden str Haifa")
-                .description("My old friend")
+                .description("addContactSuccess")
                 .build();
 
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
+        app.getHelperContact().getScreen("src/test/screenshots/screen-" + i +".png");
+        //app.getHelperContact().pause(1000);
         app.getHelperContact().submit();
         //Написал два ассерта, по-моему, так более надежно.
-        Assert.assertTrue(app.getHelperContact().isElementPresent
+        /*Assert.assertTrue(app.getHelperContact().isElementPresent
                 (By.className("contact-item_card__2SOIM")));
         Assert.assertTrue(app.getHelperContact().isElementPresent
                 (By.xpath("//h3[text()='" + contact.getPhone() + "']")));
+                */
+        Assert.assertTrue(app.getHelperContact().isContactAddByName(contact.getName()));
+        Assert.assertTrue(app.getHelperContact().isContactAddByPhone(contact.getPhone()));
+
 
     }
 
     @Test
     public void addContactSuccessRequiredFields(){
         int i = new Random().nextInt(1000) + 1000;
+        // Другой способ: int i = (int)(System.currentTimeMillis())/1000 % 3600;
         Contact contact = Contact.builder()
                 .name("Vasya")
                 .lastName("Pupkin")
                 .phone("123456789000")
                 .email("pupkin" + i + "@gmail.com")
                 .address("29 Ha-Yarden str Haifa")
-                .description("")
+                .description("addContactSuccessRequiredFields")
                 .build();
 
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
+       // app.getHelperContact().pause(1000);
         app.getHelperContact().submit();
 
-        Assert.assertTrue(app.getHelperContact().isElementPresent
+        /*Assert.assertTrue(app.getHelperContact().isElementPresent
                 (By.className("contact-item_card__2SOIM")));
         Assert.assertTrue(app.getHelperContact().isElementPresent
                 (By.xpath("//h3[text()='" + contact.getPhone() + "']")));
+        */
+        Assert.assertTrue(app.getHelperContact().isContactAddByName(contact.getName()));
+        Assert.assertTrue(app.getHelperContact().isContactAddByPhone(contact.getPhone()));
+
     }
+
+    @Test
+    public void addNewContactWrongName(){
+        Contact contact = Contact.builder()
+                .name("")
+                .lastName("Pupkin")
+                .phone("1234567890")
+                .email("pupkin@gmail.com")
+                .address("29 Ha-Yarden str Haifa")
+                .description("addNewContactWrongName")
+                .build();
+        app.getHelperContact().openContactForm();
+        app.getHelperContact().fillContactForm(contact);
+       // app.getHelperContact().pause(1000);
+        app.getHelperContact().submit();
+
+        Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
+    }
+
+      @Test
+    public void addNewContactWrongAddress(){
+        Contact contact = Contact.builder()
+                .name("Vasya")
+                .lastName("Pupkin")
+                .phone("1234567890")
+                .email("pupkin@gmail.com")
+                .address("")
+                .description("addNewContactWrongAddress")
+                .build();
+        app.getHelperContact().openContactForm();
+        app.getHelperContact().fillContactForm(contact);
+        //app.getHelperContact().pause(1000);
+        app.getHelperContact().submit();
+
+        Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
+    }
+    @Test
+    public void addNewContactWrongLastName(){
+        Contact contact = Contact.builder()
+                .name("Vasya")
+                .lastName("")
+                .phone("1234567890")
+                .email("pupkin@gmail.com")
+                .address("29 Ha-Yarden str Haifa")
+                .description("addNewContactWrongLastName")
+                .build();
+        app.getHelperContact().openContactForm();
+        app.getHelperContact().fillContactForm(contact);
+        //app.getHelperContact().pause(1000);
+        app.getHelperContact().submit();
+
+        Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
+    }
+
+    @Test
+    public void addNewContactWrongPhone(){
+        Contact contact = Contact.builder()
+                .name("Vasya")
+                .lastName("Pupkin")
+                .phone("")
+                .email("pupkin@gmail.com")
+                .address("29 Ha-Yarden str Haifa")
+                .description("addNewContactWrongPhone")
+                .build();
+        app.getHelperContact().openContactForm();
+        app.getHelperContact().fillContactForm(contact);
+        //app.getHelperContact().pause(1000);
+        app.getHelperContact().submit();
+
+        Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
+        Assert.assertTrue(app.getHelperContact().isAlertPresent("Phone not valid"));
+    }
+
+    @Test
+    public void addNewContactWrongEmail(){
+        Contact contact = Contact.builder()
+                .name("Vasya")
+                .lastName("Pupkin")
+                .phone("1234567890")
+                .email("pupkingmail.com")
+                .address("29 Ha-Yarden str Haifa")
+                .description("addNewContactWrongEmail")
+                .build();
+        app.getHelperContact().openContactForm();
+        app.getHelperContact().fillContactForm(contact);
+        //app.getHelperContact().pause(1000);
+        app.getHelperContact().submit();
+
+        Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
+        Assert.assertTrue(app.getHelperContact().isAlertPresent
+               ("Email not valid"));
+    }
+
 
 
 }
