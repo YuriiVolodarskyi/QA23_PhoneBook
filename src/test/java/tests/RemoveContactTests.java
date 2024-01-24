@@ -25,11 +25,13 @@ public class RemoveContactTests extends TestBase {
     @Test
     public void removeFirstContact() {
         int sizeBefore = app.getHelperContact().sizeOfContactsList();
+        // logger.info("Size before);
         app.getHelperContact().removeContact();
         app.getHelperContact().pause(3000);
         int sizeAfter = app.getHelperContact().sizeOfContactsList();
-
+        // logger.info("Size before);
         Assert.assertTrue(sizeBefore - sizeAfter == 1);
+        logger.info("Assert checks is quantity of contacts decreased by 1");
     }
 
     @Test
@@ -39,6 +41,7 @@ public class RemoveContactTests extends TestBase {
             app.getHelperUser().pause(3000);
         }
         Assert.assertTrue(app.getHelperUser().isRegistered());
+        logger.info("Assert checks is element 'No contacts here' present");
     }
 
 

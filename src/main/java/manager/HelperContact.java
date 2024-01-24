@@ -61,8 +61,9 @@ public class HelperContact extends HelperBase {
 
 
     public void provideContacts() {
-        List<WebElement> list = wd.findElements(By.cssSelector(".contact-item_card__2SOIM"));
-        if (list.size() < 3)
+        //List<WebElement> list = wd.findElements(By.cssSelector(".contact-item_card__2SOIM"));
+        if(sizeOfContactsList() < 3)
+        //if (list.size() < 3)
             for (int i = 0; i < 3; i++) {
                 createNewContact();
                 pause(3000);
@@ -92,7 +93,6 @@ public class HelperContact extends HelperBase {
     }
 
     public int sizeOfContactsList() {
-        List<WebElement> list = wd.findElements(By.cssSelector(".contact-item_card__2SOIM"));
-        return list.size();
+        return wd.findElements(By.cssSelector(".contact-item_card__2SOIM")).size();
     }
 }

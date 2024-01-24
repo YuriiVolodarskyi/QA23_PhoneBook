@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
@@ -13,6 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class HelperBase {
+    Logger logger = LoggerFactory.getLogger(HelperBase.class);
     WebDriver wd;
 
     public HelperBase(WebDriver wd) {

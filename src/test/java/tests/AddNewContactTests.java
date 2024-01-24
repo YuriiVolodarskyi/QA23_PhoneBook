@@ -11,16 +11,17 @@ import org.testng.annotations.Test;
 
 import java.util.Random;
 
-public class AddNewContactTests extends TestBase{
+public class AddNewContactTests extends TestBase {
 
     @BeforeClass
-    public void preCondition(){
-        if(!app.getHelperUser().isLogged())
+    public void preCondition() {
+        if (!app.getHelperUser().isLogged())
             app.getHelperUser().login(new User().withEmail("alimych65@gmail.com").withPassword("Yv030665@"));
     }
 
     @Test
-    public void addContactSuccess(){
+    public void addContactSuccess() {
+        logger.info("add contacts with valid data");
         int i = new Random().nextInt(1000) + 1000;
         Contact contact = Contact.builder()
                 .name("Vasya" + i)
@@ -33,7 +34,7 @@ public class AddNewContactTests extends TestBase{
 
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
-        app.getHelperContact().getScreen("src/test/screenshots/screen-" + i +".png");
+        app.getHelperContact().getScreen("src/test/screenshots/screen-" + i + ".png");
         //app.getHelperContact().pause(1000);
         app.getHelperContact().submit();
         //Написал два ассерта, по-моему, так более надежно.
@@ -44,12 +45,14 @@ public class AddNewContactTests extends TestBase{
                 */
         Assert.assertTrue(app.getHelperContact().isContactAddByName(contact.getName()));
         Assert.assertTrue(app.getHelperContact().isContactAddByPhone(contact.getPhone()));
+        logger.info("Asserts check is new contact present");
 
 
     }
 
     @Test
-    public void addContactSuccessRequiredFields(){
+    public void addContactSuccessRequiredFields() {
+        logger.info("add contacts with valid data - only required fields");
         int i = new Random().nextInt(1000) + 1000;
         // Другой способ: int i = (int)(System.currentTimeMillis())/1000 % 3600;
         Contact contact = Contact.builder()
@@ -63,7 +66,7 @@ public class AddNewContactTests extends TestBase{
 
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
-       // app.getHelperContact().pause(1000);
+        // app.getHelperContact().pause(1000);
         app.getHelperContact().submit();
 
         /*Assert.assertTrue(app.getHelperContact().isElementPresent
@@ -73,11 +76,13 @@ public class AddNewContactTests extends TestBase{
         */
         Assert.assertTrue(app.getHelperContact().isContactAddByName(contact.getName()));
         Assert.assertTrue(app.getHelperContact().isContactAddByPhone(contact.getPhone()));
+        logger.info("Asserts check is new contact present");
 
     }
 
     @Test
-    public void addNewContactWrongName(){
+    public void addNewContactWrongName() {
+        logger.info("add contacts with empty field 'name'");
         Contact contact = Contact.builder()
                 .name("")
                 .lastName("Pupkin")
@@ -88,14 +93,16 @@ public class AddNewContactTests extends TestBase{
                 .build();
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
-       // app.getHelperContact().pause(1000);
+        // app.getHelperContact().pause(1000);
         app.getHelperContact().submit();
 
         Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
+        logger.info("Assert check is button 'Add' present");
     }
 
-      @Test
-    public void addNewContactWrongAddress(){
+    @Test
+    public void addNewContactWrongAddress() {
+        logger.info("add contacts with empty field 'address'");
         Contact contact = Contact.builder()
                 .name("Vasya")
                 .lastName("Pupkin")
@@ -110,9 +117,12 @@ public class AddNewContactTests extends TestBase{
         app.getHelperContact().submit();
 
         Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
+        logger.info("Assert checks is button 'Add' present");
     }
+
     @Test
-    public void addNewContactWrongLastName(){
+    public void addNewContactWrongLastName() {
+        logger.info("add contacts with empty field 'lastName'");
         Contact contact = Contact.builder()
                 .name("Vasya")
                 .lastName("")
@@ -127,10 +137,12 @@ public class AddNewContactTests extends TestBase{
         app.getHelperContact().submit();
 
         Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
+        logger.info("Assert checks is button 'Add' present");
     }
 
     @Test
-    public void addNewContactWrongPhone(){
+    public void addNewContactWrongPhone() {
+        logger.info("add contacts with empty field 'phone'");
         Contact contact = Contact.builder()
                 .name("Vasya")
                 .lastName("Pupkin")
@@ -145,11 +157,14 @@ public class AddNewContactTests extends TestBase{
         app.getHelperContact().submit();
 
         Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
+        logger.info("Assert checks is button 'Add' present");
         Assert.assertTrue(app.getHelperContact().isAlertPresent("Phone not valid"));
+        logger.info("Assert check is alert 'Phone not valid' present");
     }
 
     @Test
-    public void addNewContactWrongEmail(){
+    public void addNewContactWrongEmail() {
+        logger.info("add contacts with wrong email 'pupkingmail.com'");
         Contact contact = Contact.builder()
                 .name("Vasya")
                 .lastName("Pupkin")
@@ -164,10 +179,10 @@ public class AddNewContactTests extends TestBase{
         app.getHelperContact().submit();
 
         Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
-        Assert.assertTrue(app.getHelperContact().isAlertPresent
-               ("Email not valid"));
+        logger.info("Assert checks is button 'Add' present");
+        Assert.assertTrue(app.getHelperContact().isAlertPresent("Email not valid"));
+        logger.info("Assert check is alert 'Email not valid' present");
     }
-
 
 
 }

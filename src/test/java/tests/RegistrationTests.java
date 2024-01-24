@@ -17,7 +17,8 @@ public class RegistrationTests extends TestBase {
     }
 
     @Test
-    public void RegistrationSuccess() {
+    public void registrationSuccess() {
+        logger.info("Test data email: random valid, password: 'Yv030665@' - valid");
         Random random = new Random();
         int z = (int) System.currentTimeMillis() / 1000 % 3600;
         User user = new User()
@@ -28,6 +29,7 @@ public class RegistrationTests extends TestBase {
         app.getHelperUser().submitRegistration();
 
         Assert.assertTrue(app.getHelperUser().isRegistered());
+        logger.info("Assert checks is element 'No contacts here' present ");
         //Assert.assertTrue(app.getHelperUser().isNoContactsHereDisplayed());
 
     }
@@ -35,6 +37,7 @@ public class RegistrationTests extends TestBase {
     //@Test(description = "Bug report N ***", enabled = false)
     @Test
     public void registrationWrongEmail() {
+        logger.info("Test data email not valid - without '@', password: 'Yv030665@' - valid");
         User user = new User()
                 .withEmail("volodargmail.com")
                 .withPassword("Vvolodar12345$");
@@ -43,11 +46,13 @@ public class RegistrationTests extends TestBase {
         app.getHelperUser().submitRegistration();
 
         Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password format"));
+        logger.info("Assert checks is alert present with error text 'Wrong email or password format'");
 
     }
 
     @Test
     public void registrationWrongPassword() {
+        logger.info("Test data email valid - 'volodar@gmail.com', password not valid '2345$'");
         User user = new User()
                 .withEmail("volodar@gmail.com")
                 .withPassword("2345$");
@@ -56,11 +61,13 @@ public class RegistrationTests extends TestBase {
         app.getHelperUser().submitRegistration();
 
         Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password format"));
+        logger.info("Assert checks is alert present with error text 'Wrong email or password format'");
 
     }
 
     @Test
     public void registrationExistUser() {
+        logger.info("Test data email existed - 'alimych65@gmail.com', password right - 'Yv030665'");
         User user = new User()
                 .withEmail("alimych65@gmail.com")
                 .withPassword("Yv030665@");
@@ -69,6 +76,7 @@ public class RegistrationTests extends TestBase {
         app.getHelperUser().submitRegistration();
 
         Assert.assertTrue(app.getHelperUser().isAlertPresent("User already exist"));
+        logger.info("Assert checks is alert present with error text 'User already exist'");
 
     }
 
