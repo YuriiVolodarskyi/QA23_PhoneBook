@@ -1,9 +1,15 @@
 package tests;
 
+import manager.DataProviderUser;
 import models.User;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class LoginTests extends TestBase {
 
@@ -15,17 +21,19 @@ public class LoginTests extends TestBase {
         }
     }
 
-    @Test
-    public void loginSuccess() {
-        logger.info("Test data email: 'alimych65@gmail.com' and password: 'Yv030665@'");
+    @Test(dataProvider = "loginData", dataProviderClass = DataProviderUser.class)
+    public void loginSuccess(String email, String password) {
+        logger.info("Test data email " + email + " and password " + password);
         app.getHelperUser().openLoginRegistrationForm();
-        app.getHelperUser().fillLoginRegistrationForm("alimych65@gmail.com", "Yv030665@");
+        app.getHelperUser().fillLoginRegistrationForm(email, password);
         app.getHelperUser().submitLogin();
 
         //Assert
         Assert.assertTrue(app.getHelperUser().isLogged());
         logger.info("Assert checks is element button 'Sing out' present");
     }
+
+
 
     @Test
     public void loginSuccess1() {
@@ -42,10 +50,10 @@ public class LoginTests extends TestBase {
 
 
     @Test
-    public void loginSuccessModel() {
-        logger.info("Test data email: 'alimych65@gmail.com' and password: 'Yv030665@'");
+    public void loginSuccessModel(User user) {
+        logger.info("Test data " + user.toString());
         app.getHelperUser().openLoginRegistrationForm();
-        app.getHelperUser().fillLoginRegistrationForm("alimych65@gmail.com", "Yv030665@");
+        app.getHelperUser().fillLoginRegistrationForm(user);
         app.getHelperUser().submitLogin();
 
         //Assert

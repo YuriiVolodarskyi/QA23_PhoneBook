@@ -1,5 +1,6 @@
 package tests;
 
+import manager.DataProviderContacts;
 import models.Contact;
 import models.User;
 import org.openqa.selenium.By;
@@ -19,19 +20,10 @@ public class AddNewContactTests extends TestBase {
             app.getHelperUser().login(new User().withEmail("alimych65@gmail.com").withPassword("Yv030665@"));
     }
 
-    @Test
-    public void addContactSuccess() {
-        logger.info("add contacts with valid data");
+    @Test(dataProvider = "contactSuccess", dataProviderClass = DataProviderContacts.class)
+    public void addContactSuccess(Contact contact) {
+        logger.info("Test run with data" + contact.toString());
         int i = new Random().nextInt(1000) + 1000;
-        Contact contact = Contact.builder()
-                .name("Vasya" + i)
-                .lastName("Pupkin")
-                .phone("1234567890")
-                .email("pupkin" + i + "@gmail.com")
-                .address("29 Ha-Yarden str Haifa")
-                .description("addContactSuccess")
-                .build();
-
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
         app.getHelperContact().getScreen("src/test/screenshots/screen-" + i + ".png");
