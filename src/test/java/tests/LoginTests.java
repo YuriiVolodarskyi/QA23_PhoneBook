@@ -33,8 +33,6 @@ public class LoginTests extends TestBase {
         logger.info("Assert checks is element button 'Sing out' present");
     }
 
-
-
     @Test
     public void loginSuccess1() {
         logger.info("Test data email: 'alimych65@gmail.com' and password: 'Yv030665@'");
@@ -48,6 +46,17 @@ public class LoginTests extends TestBase {
         logger.info("Assert checks is element button 'Sing out' present");
     }
 
+    @Test(dataProvider = "loginFile", dataProviderClass = DataProviderUser.class)
+    public void loginSuccessModelDP(User user) {
+        logger.info("Test data " + user.toString());
+        app.getHelperUser().openLoginRegistrationForm();
+        app.getHelperUser().fillLoginRegistrationForm(user);
+        app.getHelperUser().submitLogin();
+
+        //Assert
+        Assert.assertTrue(app.getHelperUser().isLogged());
+        logger.info("Assert checks is element button 'Sing out' present");
+    }
 
     @Test
     public void loginSuccessModel(User user) {

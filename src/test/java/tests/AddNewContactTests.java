@@ -20,7 +20,7 @@ public class AddNewContactTests extends TestBase {
             app.getHelperUser().login(new User().withEmail("alimych65@gmail.com").withPassword("Yv030665@"));
     }
 
-    @Test(dataProvider = "contactSuccess", dataProviderClass = DataProviderContacts.class)
+    @Test(dataProvider = "contactCSV", dataProviderClass = DataProviderContacts.class)
     public void addContactSuccess(Contact contact) {
         logger.info("Test run with data" + contact.toString());
         int i = new Random().nextInt(1000) + 1000;
@@ -132,17 +132,9 @@ public class AddNewContactTests extends TestBase {
         logger.info("Assert checks is button 'Add' present");
     }
 
-    @Test
-    public void addNewContactWrongPhone() {
+    @Test(dataProvider = "contactWrongPhone", dataProviderClass = DataProviderContacts.class)
+    public void addNewContactWrongPhone(Contact contact) {
         logger.info("add contacts with empty field 'phone'");
-        Contact contact = Contact.builder()
-                .name("Vasya")
-                .lastName("Pupkin")
-                .phone("")
-                .email("pupkin@gmail.com")
-                .address("29 Ha-Yarden str Haifa")
-                .description("addNewContactWrongPhone")
-                .build();
         app.getHelperContact().openContactForm();
         app.getHelperContact().fillContactForm(contact);
         //app.getHelperContact().pause(1000);
