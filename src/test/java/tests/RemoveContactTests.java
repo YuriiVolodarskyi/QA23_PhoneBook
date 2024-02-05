@@ -14,7 +14,7 @@ import java.util.List;
 
 public class RemoveContactTests extends TestBase {
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void preCondition() {
         if (!app.getHelperUser().isLogged()) {
             app.getHelperUser().login(new User().withEmail("alimych65@gmail.com").withPassword("Yv030665@"));
@@ -34,7 +34,7 @@ public class RemoveContactTests extends TestBase {
         logger.info("Assert checks is quantity of contacts decreased by 1");
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void removeAllContacts() {
         while (app.getHelperContact().isElementPresent(By.cssSelector(".contact-item_card__2SOIM"))) {
             app.getHelperContact().removeContact();

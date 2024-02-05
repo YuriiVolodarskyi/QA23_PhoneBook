@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class AddNewContactTests extends TestBase {
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void preCondition() {
         if (!app.getHelperUser().isLogged())
             app.getHelperUser().login(new User().withEmail("alimych65@gmail.com").withPassword("Yv030665@"));
@@ -42,7 +42,7 @@ public class AddNewContactTests extends TestBase {
 
     }
 
-    @Test
+    @Test(groups = {"smoke", "regress", "retest"})
     public void addContactSuccessRequiredFields() {
         logger.info("add contacts with valid data - only required fields");
         int i = new Random().nextInt(1000) + 1000;

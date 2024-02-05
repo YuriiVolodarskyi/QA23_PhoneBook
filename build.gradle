@@ -17,10 +17,42 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
+
     testCompileOnly 'org.projectlombok:lombok:1.18.28'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
 }
 
 test {
     useTestNG()
+}
+
+task qa(type: Test){
+    useTestNG() {
+        def suite = System.getProperty('suite', '')
+
+        if (suite.equals('quick')) {
+            suites 'src/test/resources/quick.xml'
+        } else if (suite.equals('login')) {
+            suites 'src/test/resources/login.xml'
+        } else {
+            suites 'src/test/resources/testng.xml'
+        }
+
+    }
+
+    if (project.hasProperty('browser')) {
+        systemProperty 'browser',
+
+                "${browser}"
+
+    }
+
+
+}
+
+task scoup(type: Test){
+    useTestNG()
+            {
+                suites 'src/test/resources/scoup.xml'
+            }
 }
