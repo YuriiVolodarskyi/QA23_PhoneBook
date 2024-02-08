@@ -50,9 +50,9 @@ task qa(type: Test){
 
 }
 
-task scoup(type: Test){
+task scope(type: Test){
     useTestNG()
             {
-                suites 'src/test/resources/scoup.xml'
+                suites 'src/test/resources/scope.xml'
             }
 }
